@@ -9,12 +9,15 @@ const prisma = new PrismaClient();
 
 app.use(express.json());
 
-// ✅ Allow CORS for port 5173
+require('dotenv').config(); // This loads the environment variables from .env file
+
+
+// ✅ Allow CORS using environment variables
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:5001"], // Add other origins if needed
-    methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type"],
+    origin: process.env.CORS_ORIGINS.split(','), // Split the origins string into an array
+    methods: process.env.CORS_METHODS.split(','), // Split the methods string into an array
+    allowedHeaders: process.env.CORS_ALLOWED_HEADERS.split(','), // Split the allowed headers string into an array
   })
 );
 
